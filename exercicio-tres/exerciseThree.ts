@@ -15,7 +15,6 @@ const vowelCounter = (vowelsWord: string):string => {
     return String(vowels.length);
 };
 
-
 button.addEventListener("click", () => {
     const htmlVowelCounter = vowelCounter(input.value);
     result.textContent = `${input.value} contém ${htmlVowelCounter} vogais!`;
@@ -32,7 +31,6 @@ const table = document.querySelector("#tabela") as HTMLTableElement;
 const getBioOrNameButton = document.querySelector("#button-getBioOrName") as HTMLButtonElement;
 const removeItemButton = document.querySelector("#removeItemButton") as HTMLButtonElement;
 const changeBioOrNamebutton = document.querySelector("#buttonChangeBioOrName") as HTMLButtonElement;
-
 
 const bioFunctional = (id: number):string  => lista.filter((person) => person.id == id)[0].bio;
 
