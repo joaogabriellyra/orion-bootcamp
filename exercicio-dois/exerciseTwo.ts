@@ -14,13 +14,21 @@ let lista: ListTypes[] = [
 // d) Crie uma função que altere a bio ou o name a partir de um id passado
 // e) Demonstre todas as funções com o paradigma funcional e com o imperativo
 
-const bioFunctional = (id: number):string  => lista.filter((person) => person.id == id)[0].bio;
+const bioFunctional = (id: number):string  => {
+    if (lista.filter((person) => person.id == id)[0] == undefined) {
+        return 'ID inválido!';
+    } 
+    return lista.filter((person) => person.id == id)[0].bio;
+}
 
 console.log("------------CONSULTANDO A BIO VIA FUNÇÃO FUNCIONAL---------------");
 console.log(bioFunctional(2));
 
 const bioImperative = (id: number):string => {
     const person = lista.filter((person) => person.id == id)
+    if (person.length == 0) {
+        return 'ID inválido!';
+    } 
     const bio = person[0].bio;
     return bio;
 }
@@ -28,19 +36,27 @@ const bioImperative = (id: number):string => {
 console.log("------------CONSULTANDO A BIO VIA FUNÇÃO IMPERATIVA---------------");
 console.log(bioImperative(2));
 
-const nameFunctional = (id: number):string => lista.filter((person) => person.id == id)[0].name;
+const nameFunctional = (id: number):string => {
+    if (lista.filter((person) => person.id == id).length == 0) {
+        return 'ID inválido!';
+    }
+    return lista.filter((person) => person.id == id)[0].name;
+}
 
 console.log("------------CONSULTANDO O NOME VIA FUNÇÃO FUNCIONAL---------------");
-console.log(nameFunctional(1));
+console.log(nameFunctional(2));
 
 const nameImperative = (id: number):string => {
     const person = lista.filter((person) => person.id == id)
+    if (person.length == 0) {
+        return 'ID inválido!';
+    } 
     const name = person[0].name;
     return name;
 }
 
 console.log("------------CONSULTANDO O NOME VIA FUNÇÃO IMPERATIVA---------------");
-console.log(nameImperative(4));
+console.log(nameImperative(2));
 
 const deleteItemFunctional = (id:number):void => {
     lista = lista.filter((person) => person.id !== id);
@@ -61,24 +77,31 @@ deleteItemImperative(2);
 console.log(lista);
 
 
-const changeNameOrBioFunctional = (id: number, key: 'name' | 'bio', value: string):void => {
+const changeNameOrBioFunctional = (id: number, key: 'name' | 'bio', value: string):string | void => {
+    if (lista.filter((person) => person.id == id).length === 0) {
+        return 'ID inválido!';
+    }
     if (key === 'name') lista.filter((person) => person.id === id)[0].name = value
     else lista.filter((person) => person.id === id)[0].bio  = value
 }
 
 
 console.log("------------ALTERANDO O NOME DE UM ITEM VIA FUNÇÃO FUNCIONAL---------------");
-changeNameOrBioFunctional(3, 'name', 'Marie Curie');
+console.log(changeNameOrBioFunctional(3, 'name', 'Marie Curie'));
 console.log(lista);
 
 console.log("------------ALTERANDO O BIO DE UM ITEM VIA FUNÇÃO FUNCIONAL---------------");
 changeNameOrBioFunctional(3, 'bio', 'Marie Skłodowska-Curie, nascida Maria Salomea Skłodowska, foi uma física e química polonesa naturalizada francesa, que conduziu pesquisas pioneiras sobre radioatividade.');
 console.log(lista);
 
-const changeNameOrBioImperative = (id: number, key: 'name' | 'bio', value: string):void => {
+const changeNameOrBioImperative = (id: number, key: 'name' | 'bio', value: string):string | void => {
     const newValue = value;
     const keyToAccess = key;
-    const personToChangeValue = lista.filter((person) => person.id === id)[0];
+    const person = lista.filter((person) => person.id === id)
+    if (person.length == 0) {
+        return 'ID inválido!';
+    } 
+    const personToChangeValue = person[0];
 
     if (keyToAccess === 'name') {
         personToChangeValue.name = newValue;
