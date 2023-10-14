@@ -4,7 +4,7 @@ const input = document.querySelector("#vowelCounterInput");
 const button = document.querySelector("#button");
 const result = document.querySelector("#result");
 const checkingVowel = (vowel) => {
-    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    const vowels = ["a", "e", "i", "o", "u"];
     return vowels.includes(vowel);
 };
 const vowelCounter = (vowelsWord) => {
@@ -15,7 +15,7 @@ const vowelCounter = (vowelsWord) => {
 button.addEventListener("click", () => {
     const htmlVowelCounter = vowelCounter(input.value);
     result.textContent = `${input.value} contém ${htmlVowelCounter} vogais!`;
-    input.value = '';
+    input.value = "";
 });
 let lista = [
     { id: 1, name: "Ada Lovelace", bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" },
@@ -27,15 +27,31 @@ const table = document.querySelector("#tabela");
 const getBioOrNameButton = document.querySelector("#button-getBioOrName");
 const removeItemButton = document.querySelector("#removeItemButton");
 const changeBioOrNamebutton = document.querySelector("#buttonChangeBioOrName");
-const bioFunctional = (id) => lista.filter((person) => person.id == id)[0].bio;
+const bioFunctional = (id) => {
+    if (lista.filter((person) => person.id == id)[0] == undefined) {
+        return "ID inválido!";
+    }
+    return lista.filter((person) => person.id == id)[0].bio;
+};
 const bioImperative = (id) => {
     const person = lista.filter((person) => person.id == id);
+    if (person.length == 0) {
+        return "ID inválido!";
+    }
     const bio = person[0].bio;
     return bio;
 };
-const nameFunctional = (id) => lista.filter((person) => person.id == id)[0].name;
+const nameFunctional = (id) => {
+    if (lista.filter((person) => person.id == id).length == 0) {
+        return "ID inválido!";
+    }
+    return lista.filter((person) => person.id == id)[0].name;
+};
 const nameImperative = (id) => {
     const person = lista.filter((person) => person.id == id);
+    if (person.length == 0) {
+        return "ID inválido!";
+    }
     const name = person[0].name;
     return name;
 };
@@ -47,7 +63,10 @@ const deleteItemImperative = (id) => {
     lista = newList;
 };
 const changeNameOrBioFunctional = (id, key, value) => {
-    if (key === 'name')
+    if (lista.filter((person) => person.id == id).length === 0) {
+        return "ID inválido!";
+    }
+    if (key === "name")
         lista.filter((person) => person.id === id)[0].name = value;
     else
         lista.filter((person) => person.id === id)[0].bio = value;
@@ -55,8 +74,12 @@ const changeNameOrBioFunctional = (id, key, value) => {
 const changeNameOrBioImperative = (id, key, value) => {
     const newValue = value;
     const keyToAccess = key;
-    const personToChangeValue = lista.filter((person) => person.id === id)[0];
-    if (keyToAccess === 'name') {
+    const person = lista.filter((person) => person.id === id);
+    if (person.length == 0) {
+        return "ID inválido!";
+    }
+    const personToChangeValue = person[0];
+    if (keyToAccess === "name") {
         personToChangeValue.name = newValue;
     }
     else {
@@ -64,14 +87,14 @@ const changeNameOrBioImperative = (id, key, value) => {
     }
 };
 const initialInsert = () => {
-    table.textContent = '';
+    table.textContent = "";
     const firstLine = document.createElement("tr");
     const tableTitleOne = document.createElement("th");
     const tableTitleTwo = document.createElement("th");
     const tableTitleThree = document.createElement("th");
-    tableTitleOne.textContent = 'ID';
-    tableTitleTwo.textContent = 'Nome';
-    tableTitleThree.textContent = 'Biografia';
+    tableTitleOne.textContent = "ID";
+    tableTitleTwo.textContent = "Nome";
+    tableTitleThree.textContent = "Biografia";
     firstLine.appendChild(tableTitleOne);
     firstLine.appendChild(tableTitleTwo);
     firstLine.appendChild(tableTitleThree);
@@ -97,17 +120,19 @@ const getValueOfBioOrName = () => {
     const textArea = document.getElementById("textarea-getBioOrName");
     let optionChecked = undefined;
     let idSelected = 1;
-    let result = '';
+    let result = "";
     if (getNameOption.checked || getbioOption.checked) {
-        optionChecked = getNameOption.checked ? 'name' : 'bio';
+        optionChecked = getNameOption.checked ? "name" : "bio";
         for (let i = 0; i < idSelect.options.length; i++) {
             if (idSelect.options[i].selected)
                 idSelected = Number(idSelect.options[i].value);
         }
-        result = optionChecked == 'name' ? nameFunctional(idSelected) : bioFunctional(idSelected);
+        ;
+        result = optionChecked == "name" ? nameFunctional(idSelected) : bioFunctional(idSelected);
         initialInsert();
         textArea.value = result;
     }
+    ;
 };
 const removeItem = () => {
     const idSelect = document.getElementById("idOptionsRemove");
@@ -116,6 +141,7 @@ const removeItem = () => {
         if (idSelect.options[i].selected)
             idSelected = Number(idSelect.options[i].value);
     }
+    ;
     deleteItemFunctional(idSelected);
     initialInsert();
 };
@@ -124,20 +150,21 @@ const changeBioOrName = () => {
     const getbioOption = document.getElementById("bioChange");
     const idSelect = document.getElementById("idChangeOptions");
     const textArea = document.getElementById("textareaChangeBioOrName");
-    let optionChecked = '';
+    let optionChecked = "";
     let idSelected = 1;
     if (getNameOption.checked || getbioOption.checked) {
-        optionChecked = getNameOption.checked ? 'name' : 'bio';
+        optionChecked = getNameOption.checked ? "name" : "bio";
         for (let i = 0; i < idSelect.options.length; i++) {
             if (idSelect.options[i].selected)
                 idSelected = Number(idSelect.options[i].value);
         }
-        optionChecked == 'name' ? changeNameOrBioFunctional(idSelected, 'name', textArea.value) : changeNameOrBioFunctional(idSelected, 'bio', textArea.value);
-        textArea.value = '';
+        ;
+        optionChecked == "name" ? changeNameOrBioFunctional(idSelected, "name", textArea.value) : changeNameOrBioFunctional(idSelected, "bio", textArea.value);
+        textArea.value = "";
         initialInsert();
     }
 };
-getBioOrNameButton.addEventListener(('click'), getValueOfBioOrName);
-removeItemButton.addEventListener(('click'), removeItem);
-changeBioOrNamebutton.addEventListener(('click'), changeBioOrName);
+getBioOrNameButton.addEventListener(("click"), getValueOfBioOrName);
+removeItemButton.addEventListener(("click"), removeItem);
+changeBioOrNamebutton.addEventListener(("click"), changeBioOrName);
 initialInsert();
