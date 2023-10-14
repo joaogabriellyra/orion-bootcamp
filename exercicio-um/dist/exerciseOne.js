@@ -6,7 +6,7 @@ const input = document.querySelector("#vowelCounterInput");
 const button = document.querySelector("#button");
 const result = document.querySelector("#result");
 const checkingVowel = (vowel) => {
-    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    const vowels = ["a", "e", "i", "o", "u"];
     return vowels.includes(vowel);
 };
 const vowelCounter = (vowelsWord) => {
