@@ -1,67 +1,95 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+
 const input = document.querySelector("#vowelCounterInput");
 const button = document.querySelector("#button");
 const result = document.querySelector("#result");
+
 const checkingVowel = (vowel) => {
     const vowels = ["a", "e", "i", "o", "u"];
     return vowels.includes(vowel);
 };
+
 const vowelCounter = (vowelsWord) => {
     const word = String(vowelsWord);
     const vowels = word.toLowerCase().split("").filter(checkingVowel);
     return String(vowels.length);
 };
+
 button.addEventListener("click", () => {
     const htmlVowelCounter = vowelCounter(input.value);
     result.textContent = `${input.value} contém ${htmlVowelCounter} vogais!`;
     input.value = "";
 });
+
 let lista = [
     { id: 1, name: "Ada Lovelace", bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" },
     { id: 2, name: "Alan Turing", bio: "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificial" },
     { id: 3, name: "Nikola Tesla", bio: "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada." },
     { id: 4, name: "Nicolau Copérnico", bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
 ];
+
 const table = document.querySelector("#tabela");
 const getBioOrNameButton = document.querySelector("#button-getBioOrName");
 const removeItemButton = document.querySelector("#removeItemButton");
 const changeBioOrNamebutton = document.querySelector("#buttonChangeBioOrName");
+
 const bioFunctional = (id) => {
     if (lista.filter((person) => person.id == id)[0] == undefined) {
         return "ID inválido!";
     }
     return lista.filter((person) => person.id == id)[0].bio;
 };
+
 const bioImperative = (id) => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
-        return "ID inválido!";
+    let person;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
     }
-    const bio = person[0].bio;
+    if (!person) {
+        return undefined;
+    }
+    const bio = person.bio;
     return bio;
 };
+
 const nameFunctional = (id) => {
     if (lista.filter((person) => person.id == id).length == 0) {
         return "ID inválido!";
     }
     return lista.filter((person) => person.id == id)[0].name;
 };
+
 const nameImperative = (id) => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
-        return "ID inválido!";
+    let person;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
     }
-    const name = person[0].name;
+    if (!person) {
+        return undefined;
+    }
+    const name = person.name;
     return name;
 };
+
 const deleteItemFunctional = (id) => {
     lista = lista.filter((person) => person.id !== id);
 };
+
 const deleteItemImperative = (id) => {
-    const newList = lista.filter((person) => person.id !== id);
+    let newList = [];
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id !== id) {
+            newList.push(lista[i]);
+        }
+    }
     lista = newList;
 };
+
 const changeNameOrBioFunctional = (id, key, value) => {
     if (lista.filter((person) => person.id == id).length === 0) {
         return "ID inválido!";
@@ -71,21 +99,27 @@ const changeNameOrBioFunctional = (id, key, value) => {
     else
         lista.filter((person) => person.id === id)[0].bio = value;
 };
+
 const changeNameOrBioImperative = (id, key, value) => {
     const newValue = value;
     const keyToAccess = key;
-    const person = lista.filter((person) => person.id === id);
-    if (person.length == 0) {
-        return "ID inválido!";
+    let person;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
     }
-    const personToChangeValue = person[0];
+    if (!person) {
+        return undefined;
+    }
     if (keyToAccess === "name") {
-        personToChangeValue.name = newValue;
+        person.name = newValue;
     }
     else {
-        personToChangeValue.bio = newValue;
+        person.bio = newValue;
     }
 };
+
 const initialInsert = () => {
     table.textContent = "";
     const firstLine = document.createElement("tr");
@@ -113,6 +147,7 @@ const initialInsert = () => {
         table.appendChild(line);
     });
 };
+
 const getValueOfBioOrName = () => {
     const getNameOption = document.getElementById("name");
     const getbioOption = document.getElementById("bio");
@@ -134,6 +169,7 @@ const getValueOfBioOrName = () => {
     }
     ;
 };
+
 const removeItem = () => {
     const idSelect = document.getElementById("idOptionsRemove");
     let idSelected = 1;
@@ -145,6 +181,7 @@ const removeItem = () => {
     deleteItemFunctional(idSelected);
     initialInsert();
 };
+
 const changeBioOrName = () => {
     const getNameOption = document.getElementById("nameChange");
     const getbioOption = document.getElementById("bioChange");
@@ -164,7 +201,9 @@ const changeBioOrName = () => {
         initialInsert();
     }
 };
+
 getBioOrNameButton.addEventListener(("click"), getValueOfBioOrName);
 removeItemButton.addEventListener(("click"), removeItem);
 changeBioOrNamebutton.addEventListener(("click"), changeBioOrName);
+
 initialInsert();

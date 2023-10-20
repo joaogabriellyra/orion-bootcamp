@@ -39,12 +39,17 @@ const bioFunctional = (id: number):string  => {
     return lista.filter((person) => person.id == id)[0].bio;
 }
 
-const bioImperative = (id: number):string => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
-        return "ID inválido!";
+const bioImperative = (id: number):string | undefined => {
+    let person;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
+    }
+    if (!person) {
+        return undefined;
     } 
-    const bio = person[0].bio;
+    const bio = person.bio;
     return bio;
 }
 
@@ -55,12 +60,17 @@ const nameFunctional = (id: number):string => {
     return lista.filter((person) => person.id == id)[0].name;
 }
 
-const nameImperative = (id: number):string => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
-        return "ID inválido!";
+const nameImperative = (id: number):string | undefined => {
+    let person;
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
+    }
+    if (!person) {
+        return undefined;
     } 
-    const name = person[0].name;
+    const name = person.name;
     return name;
 }
 
@@ -69,7 +79,12 @@ const deleteItemFunctional = (id:number):void => {
 }
 
 const deleteItemImperative = (id:number):void => {
-    const newList = lista.filter((person) => person.id !== id);
+    let newList = [];
+    for(let i = 0; i < lista.length; i++) {
+        if (lista[i].id !== id) {
+            newList.push(lista[i]);
+    }
+    }
     lista = newList;
 }
 
@@ -84,17 +99,23 @@ const changeNameOrBioFunctional = (id: number, key: "name" | "bio", value: strin
 const changeNameOrBioImperative = (id: number, key: "name" | "bio", value: string):string | void => {
     const newValue = value;
     const keyToAccess = key;
-    const person = lista.filter((person) => person.id === id);
-    if (person.length == 0) {
-        return "ID inválido!";
+    let person;
+
+    for (let i = 0; i < lista.length; i++) {
+        if (lista[i].id === id) {
+            person = lista[i];
+        }
+    }
+
+    if (!person) {
+        return undefined;
     } 
-    const personToChangeValue = person[0];
 
     if (keyToAccess === "name") {
-        personToChangeValue.name = newValue;
+        person.name = newValue;
     } 
     else {
-        personToChangeValue.bio = newValue;
+        person.bio = newValue;
     } 
 }
 
