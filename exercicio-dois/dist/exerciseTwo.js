@@ -12,37 +12,37 @@ let lista = [
 // d) Crie uma função que altere a bio ou o name a partir de um id passado
 // e) Demonstre todas as funções com o paradigma funcional e com o imperativo
 const bioFunctional = (id) => {
-    if (lista.filter((person) => person.id == id)[0] == undefined) {
+    if (!(lista.find((person) => person.id === id))) {
         return "ID inválido!";
     }
-    return lista.filter((person) => person.id == id)[0].bio;
+    return lista.filter((person) => person.id === id)[0].bio;
 };
 console.log("------------CONSULTANDO A BIO VIA FUNÇÃO FUNCIONAL---------------");
-console.log(bioFunctional(2));
+console.log(bioFunctional(3));
 const bioImperative = (id) => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
+    const person = (lista.find((person) => person.id === id));
+    if (!person) {
         return "ID inválido!";
     }
-    const bio = person[0].bio;
+    const bio = person.bio;
     return bio;
 };
 console.log("------------CONSULTANDO A BIO VIA FUNÇÃO IMPERATIVA---------------");
 console.log(bioImperative(2));
 const nameFunctional = (id) => {
-    if (lista.filter((person) => person.id == id).length == 0) {
+    if (!(lista.find((person) => person.id === id))) {
         return "ID inválido!";
     }
-    return lista.filter((person) => person.id == id)[0].name;
+    return lista.filter((person) => person.id === id)[0].name;
 };
 console.log("------------CONSULTANDO O NOME VIA FUNÇÃO FUNCIONAL---------------");
 console.log(nameFunctional(2));
 const nameImperative = (id) => {
-    const person = lista.filter((person) => person.id == id);
-    if (person.length == 0) {
+    const person = (lista.find((person) => person.id === id));
+    if (!person) {
         return "ID inválido!";
     }
-    const name = person[0].name;
+    const name = person.name;
     return name;
 };
 console.log("------------CONSULTANDO O NOME VIA FUNÇÃO IMPERATIVA---------------");
@@ -61,7 +61,7 @@ console.log("------------DELETANDO UM ITEM VIA FUNÇÃO IMPERATIVA--------------
 deleteItemImperative(2);
 console.log(lista);
 const changeNameOrBioFunctional = (id, key, value) => {
-    if (lista.filter((person) => person.id == id).length === 0) {
+    if (!(lista.find((person) => person.id === id))) {
         return "ID inválido!";
     }
     if (key === "name")
@@ -78,11 +78,11 @@ console.log(lista);
 const changeNameOrBioImperative = (id, key, value) => {
     const newValue = value;
     const keyToAccess = key;
-    const person = lista.filter((person) => person.id === id);
-    if (person.length == 0) {
+    const person = (lista.find((person) => person.id === id));
+    if (!person) {
         return "ID inválido!";
     }
-    const personToChangeValue = person[0];
+    const personToChangeValue = person;
     if (keyToAccess === "name") {
         personToChangeValue.name = newValue;
     }
