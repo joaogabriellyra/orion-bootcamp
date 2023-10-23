@@ -174,6 +174,7 @@ const removeItem = ():void => {
         if (idSelect.options[i].selected) idSelected = Number(idSelect.options[i].value);
     };
     deleteItemFunctional(idSelected);
+    insertOptionsInSelect();
     initialInsert();
 }
 
@@ -195,8 +196,36 @@ const changeBioOrName = ():void => {
     }
 }
 
+const insertOptionsInSelect = ():void => {
+    const selectGetBioOrName = document.getElementById("idOptions") as HTMLSelectElement;
+    const selectRemoveItem = document.getElementById("idOptionsRemove") as HTMLSelectElement;
+    const selectIdForChangeValue = document.getElementById("idChangeOptions") as HTMLSelectElement;
+
+    selectGetBioOrName.textContent = "";
+    selectRemoveItem.textContent = "";
+    selectIdForChangeValue.textContent = "";
+
+    lista.forEach((person) => {
+        const optionToRemove = document.createElement("option") as HTMLOptionElement;
+        const optionToGetBioOrName = document.createElement("option") as HTMLOptionElement;
+        const optionToChangeValue = document.createElement("option") as HTMLOptionElement;
+
+        optionToChangeValue.setAttribute("value", String(person.id));
+        optionToChangeValue.textContent = String(person.id);
+        optionToGetBioOrName.setAttribute("value", String(person.id));
+        optionToGetBioOrName.textContent = String(person.id);
+        optionToRemove.setAttribute("value", String(person.id));
+        optionToRemove.textContent = String(person.id);
+
+        selectIdForChangeValue.appendChild(optionToChangeValue);
+        selectRemoveItem.appendChild(optionToRemove);
+        selectGetBioOrName.appendChild(optionToGetBioOrName);
+    })
+}
+
 getBioOrNameButton.addEventListener(("click"), getValueOfBioOrName);
 removeItemButton.addEventListener(("click"), removeItem);
 changeBioOrNamebutton.addEventListener(("click"), changeBioOrName);
 
 initialInsert();
+insertOptionsInSelect();
