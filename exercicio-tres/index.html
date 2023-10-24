@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Contador de vogais</h1>
+    <input type="text" id="vowelCounterInput">
+    <button id="button">Confira</button>
+    <h2 id="result"></h2>
+    <table id="tabela">
+    </table>
+    <div id="div-getBioOrName">
+        <h2>Visualizador de informações específicas</h2>
+        <h4>Primeiro selecione o ID de quem você quer visualizar, após isso, selecione se você quer visualizar o nome ou a biografia</h3>
+        <div>
+            <label>ID
+            </label>
+            <select id="idOptions">
+            </select>
+            <label>Nome <input type="radio" id="name" name="getInfoById" value="name"/></label>
+            <label>Biografia<input type="radio" id="bio" name="getInfoById" value="bio"/></label>
+            <button id="button-getBioOrName">Clique e visualize</button>
+        </div>
+        <textarea name="" id="textarea-getBioOrName" cols="30" rows="10"></textarea>
+    </div>
+    <div>
+        <h2>Selecione um ID e remova um item da tabela baseado no ID</h2>
+        <label for="">ID
+            <select name="" id="idOptionsRemove">
+            </select>
+        <button id="removeItemButton">Clique e remova</button>
+    </div>
+    <div>
+        <h2>Alterar a informação de alguma das pessoas da tabela via ID</h2>
+        <h4>Primeiro selecione o ID de quem você quer fazer uma alteração, após isso, selecione se você quer alterar o nome ou a biografia, insira as informações que irão substituir e clique no botão</h3>
+            <div>
+                <label for="">ID
+                <select name="" id="idChangeOptions">
+                </select>
+                <label>Nome <input type="radio" id="nameChange" name="getInfoById" value="name"/></label>
+                <label>Biografia<input type="radio" id="bioChange" name="getInfoById" value="bio"/></label>
+                </label>
+                <button id="buttonChangeBioOrName">Clique e altere</button>
+            </div>
+            <textarea name="" id="textareaChangeBioOrName" cols="30" rows="10"></textarea>
+    </div>
+<script>var exports = {};</script>
+<script src="dist/exerciseThree.js"></script>
+</body>
+</html>
